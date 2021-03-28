@@ -1,0 +1,16 @@
+{
+    "naziv_usera":{
+        "username": "username",
+        "password": "password",
+        "adress": "gx00000Adress",
+        "funds": 100,
+        
+        "nfts":[
+            "id1","id2"
+        ],
+        
+        "cart":[
+            "id1","id2"
+        ]
+    }
+}

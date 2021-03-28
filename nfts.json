@@ -1,0 +1,10 @@
+{
+    "nft_id":{
+        "type": "jpg/mp4/gif",
+        "cover": "slika.jpg",
+        "name": "nft",
+        "description": "deskripcija",
+        "owner_adress": "gx0000Adres",
+        "price": 100
+    }
+}
