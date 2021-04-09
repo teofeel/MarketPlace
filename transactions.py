@@ -24,18 +24,14 @@ class Transaction(): #this works
         signed_tx = self.__web3.eth.account.signTransaction(self.__tx, private_key)
         self.__web3.eth.sendRawTransaction(signed_tx.rawTransaction) 
 
-    def write_json():
-        with open(filename,'w') as f: 
-            json.dump(data,f)
-
-    def update_database(user):
+    '''def update_database(user):
         with open('users.json') as json_file: 
             data = json.load(json_file) 
             temp = data['users'] 
             temp.append(user)
-            write_json(data)
+            write_json(data)'''
 
-    def save_transaction(self): #ovo bre za poresku ako me prijave
+    def save_transaction(self): 
         def write_json(data, filename='transactions.json'):
             with open(filename,'w') as f: 
                 json.dump(data,f)

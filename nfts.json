@@ -4,8 +4,6 @@
         "cover": "slika.jpg",
         "name": "nft",
         "description": "deskripcija",
-        "total_count": 10,
-        "owner_adresses": ["gx00000Adress", "gx000001Adress"],
         "price": 100
     }
 }

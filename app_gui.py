@@ -3,8 +3,12 @@ from flask import render_template
 import json
 from web3 import Web3
 from transactions import Transaction
+from user import User
+import os
+from brownie import nft
 
 app = Flask(__name__)
+
 infuria_url = "https://mainnet.infura.io/v3/639b3d222da343759f90819765eb6c55" #infura api to connect to eth blockchain network, if for real
 ganache_url = "HTTP://127.0.0.1:7545" #'local' eth network
 
@@ -31,6 +35,9 @@ def video_nfts():
 def gif_nfts():'''
 
 app.run()
+
+
+
 
 
 

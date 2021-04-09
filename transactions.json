@@ -1,9 +1,9 @@
 {
-    "transactions":[
+    "transactions": [
         {
-            "buyer": "hdiufh3",
-            "seller": "jefr9i42j98jf",
-            "value": 50,
+            "buyer": "hdiufh3", 
+            "seller": "jefr9i42j98jf", 
+            "value": 50, 
             "time": "neki dan"
         }
     ]
