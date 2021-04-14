@@ -37,26 +37,27 @@ def login_func(username, password):
             current_user = user
             return True
     return False
+
 def check_existing_username(username):
     for user in users:
         if username == user.getUsername():
             return False
     return True
 
-def adress_valid(adress):
-    if web3.isAddress(adress):
+def adress_valid(address):
+    if web3.isAddress(address):
         return True
     return False
 
-def register_func(username, password, conf_pass, adress):
+def register_func(username, password, conf_pass, address):
     if password != conf_pass:
         return 1
     elif not check_existing_username(username):
         return 2
-    elif not adress_valid(adress):
+    elif not address_valid(address):
         return 3
     else:
-        u = User(username, password, adress, [])
+        u = User(username, password, address, [])
         u.save_user()
         return 4
 
@@ -90,7 +91,7 @@ def register_user():
         username = request.form.get("username")
         password = request.form.get("password")
         conf_pass = request.form.get("confirm_password")
-        adress = request.form.get("wallet_adress")
+        adress = request.form.get("wallet_address")
 
         if register_func(username, password, conf_pass, adress)==4:
             current_user = User(username,password,adress,[])
