@@ -1,8 +1,38 @@
 <html>
     <head>
-
+        <title>MarkεtΠlacε</title>
     </head>
+
     <body>
+        {% include "nav.html" %}
+
+        <div class="welcome">
+            <div class ="description">
+                <h1>MarkεtΠlacε</h1>
+
+                <div class="despar">
+                    <h2>This is the Future</h2>
+                    <p>MarketPlace for digital art. Built for digital creators and crypto natives</p>
+                </div>
+            </div>
+
+            <div class="browse">
+                <a href = "/nfts">
+                    <div class="artworkw">Artwork</div>
+                </a>
+            </div>
+
+            <div class="forUser">
+                <div class="wlcReg">
+                    <a href = "/register">
+                        <div class="registerw">Become a creator on MarkεtΠlacε</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
         
+        {% include "ftr.html" %}
+
     </body>
 </html>

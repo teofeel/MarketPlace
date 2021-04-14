@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>MarkεtΠlacε Login</title>
+    </head>
+
+    <body>
+        {% include "nav.html" %}
+        <div class="mini-logo">
+            <a href="/">
+                <img src="">
+            </a>
+        </div>
+
+        <div class="log_in">
+
+            <div class="lgn">
+                <h1 class="login_H">Login</h1>
+            </div>
+    
+            <div class="login_form">
+                <form class="forma" action = "{{url_for("login_user")}}" method="POST">
+                    <h4>Username</h4>
+                    <input type = "text" name="username">
+                    <h4>Password</h4>
+                    <input type = "password" name = "password">
+                    <br>
+                    <button type="submit">Login</button>
+                    <p>{{content}}</p>
+                </form>
+            </div>
+    
+            <br>
+    
+            <div class="register_new_user">
+                <a href="/register">Register new user</a>
+            </div>
+        </div>
+
+        {% include "ftr.html" %}
+    </body>
+</html>

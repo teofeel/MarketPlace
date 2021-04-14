@@ -17,17 +17,6 @@ contract NFT{
         name = __name;
         price = __price;
     }
-
-    function ChangeOwner(address newOwner) private{
-        if (msg.sender != owner) return;
-
-        owner = newOwner;
-    }
-
-    function changeName(bytes32 newName) public {
-        if (msg.sender == address(owner))
-            name = newName;
-    }
     
 }
 

@@ -1,39 +1,113 @@
-from flask import Flask
-from flask import render_template
+from flask import Flask, request, render_template
 import json
 from web3 import Web3
 from transactions import Transaction
 from user import User
 import os
-from brownie import nft
+#from brownie import nft
 
 app = Flask(__name__)
 
 infuria_url = "https://mainnet.infura.io/v3/639b3d222da343759f90819765eb6c55" #infura api to connect to eth blockchain network, if for real
 ganache_url = "HTTP://127.0.0.1:7545" #'local' eth network
+web3 = Web3(Web3.HTTPProvider(ganache_url))
+
 
 users = []
 nfts = []
+current_user = User("","","",[]) #user that is currently logged in
+
+def load_users(users):
+    users_file = open("users.json")
+    users_data = json.load(users_file)
+
+    for u in users_data:
+        nfts = []
+
+        for acc in users_data[u]["nfts"]:
+            nfts.append(acc)
+
+        users.append(User(users_data[u]["username"], users_data[u]["password"],users_data[u]["adress"], nfts)) 
+
+def login_func(username, password):
+    global current_user
+
+    for user in users:
+        if username == user.getUsername() and user.check_password_match(password):
+            current_user = user
+            return True
+    return False
+def check_existing_username(username):
+    for user in users:
+        if username == user.getUsername():
+            return False
+    return True
+
+def adress_valid(adress):
+    if web3.isAddress(adress):
+        return True
+    return False
+
+def register_func(username, password, conf_pass, adress):
+    if password != conf_pass:
+        return 1
+    elif not check_existing_username(username):
+        return 2
+    elif not adress_valid(adress):
+        return 3
+    else:
+        u = User(username, password, adress, [])
+        u.save_user()
+        return 4
 
 @app.route('/')
 def home():
     return render_template('home.html')
 
-'''@app.route('/login')
+@app.route('/login')
 def login():
+    return render_template('login.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login_user():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        if login_func(username, password): 
+            return home()
+        
+    return render_template("login.html", content = "Username or password not matching. Try again")
 
 @app.route('/register')
 def register():
+    return render_template("register.html")
 
-@app.route('/photo_nfts')
-def photo_nfts():
+@app.route('/register', methods=['GET','POST'])
+def register_user():
+    global current_user
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        conf_pass = request.form.get("confirm_password")
+        adress = request.form.get("wallet_adress")
 
-@app.route('/video_nfts')
-def video_nfts():
+        if register_func(username, password, conf_pass, adress)==4:
+            current_user = User(username,password,adress,[])
+            return home()
 
-@app.route('/gif_nfts')
-def gif_nfts():'''
+        elif register_func(username, password, conf_pass, adress)==3:
+            return render_template("register.html", content="Wallet adress is not valid")
 
+        elif register_func(username, password, conf_pass, adress)==2:
+            return render_template("register.html", content="Username already exists")
+
+        elif register_func(username, password, conf_pass, adress)==1:
+            return render_template("register.html", content="Passwords don't match")
+
+    return render_template("register.html", content="Uknown error")
+
+load_users(users)
 app.run()
 
 

@@ -4,6 +4,7 @@
         "cover": "slika.jpg",
         "name": "nft",
         "description": "deskripcija",
-        "price": 100
+        "price": 100,
+        "owner": "0x0000hdyyy1123"
     }
 }
