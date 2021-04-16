@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session, redirect, url_for
 import json
 from web3 import Web3
 from transactions import Transaction
@@ -63,7 +63,11 @@ def register_func(username, password, conf_pass, address):
 
 @app.route('/')
 def home():
+    if current_user.getUsername()!="":
+        return render_template('home.html', logged_in=True)
+        
     return render_template('home.html')
+    
 
 @app.route('/login')
 def login():
@@ -107,6 +111,15 @@ def register_user():
             return render_template("register.html", content="Passwords don't match")
 
     return render_template("register.html", content="Uknown error")
+
+@app.route('/nfts')
+def artwork():
+    return render_template("nfts.html")
+
+@app.route('/nfts', methods=['GET', 'POST'])
+def choosen_nft():
+    if request.method=='post':
+        return render_template('nftID.html') #treba ubaciti podatke na tu stranicu (slika, naziv, cena.....)
 
 load_users(users)
 app.run()

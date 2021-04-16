@@ -1,29 +1,45 @@
 <div class = "navbar">
     <div class="navbar1">
-        <div class="artwork">
+        <div class="navBtn">
             <a href = "/nfts">
-                <div class="artworkw">Artwork</div>
+                <div class="wrt">Artwork</div>
             </a>
         </div>
 
-        <div class="home">
+        <div class="navBtn">
             <a href = "/">
-                <div class="homew">Home</div>
+                <div class="wrt">Home</div>
             </a>
         </div>
-
-        <div class="login">
+    {% if not logged_in %}
+        <div class="navBtn">
             <a href = "/login">
-                <div class="loginw">Login</div>
+                <div class="wrt">Login</div>
             </a>
         </div>
     </div>
 
     <div class="navbar2">
-        <div class="register">
+        <div class="rgstrBtn">
             <a href = "/register">
-                <div class="registerw">Register</div>
+                <div class="wrt">Register</div>
             </a>
         </div>
     </div>
+    {% endif%}
+
+    {% if logged_in %}
+    <div class="userNav">
+        <div class="navBtn">
+            <a href = "/account_settings">
+                <div class="wrt">User</div>
+            </a>
+        </div>
+        <div class="navBtn">
+            <a href = "/">
+                <div class="wrt">Logout</div>
+            </a>
+        </div>
+    </div>
+    {% endif %}
 </div>
