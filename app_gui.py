@@ -4,6 +4,7 @@ from web3 import Web3
 from transactions import Transaction
 from user import User
 import os
+from nft import NFT 
 #from brownie import nft
 
 app = Flask(__name__)
@@ -28,6 +29,13 @@ def load_users(users):
             nfts.append(acc)
 
         users.append(User(users_data[u]["username"], users_data[u]["password"],users_data[u]["adress"], nfts)) 
+
+def load_nfts(nfts):
+    nfts_file = open("nfts.json")
+    nfts_data = json.load(nfts_file)
+
+    for u in nfts_data:
+        nfts.append(NFT(nfts_data[u]["id"], nfts_data[u]["type"],nfts_data[u]["cover"], nfts_data[u]["name"],nfts_data[u]["description"], nfts_data[u]["price"], nfts_data[u]["owner"])) 
 
 def login_func(username, password):
     global current_user
@@ -67,7 +75,14 @@ def home():
         return render_template('home.html', logged_in=True)
         
     return render_template('home.html')
-    
+
+@app.route('/logout')
+def logout():
+    global current_user
+    current_user = User("","","",[])  
+      
+    return redirect(url_for('home'))
+
 
 @app.route('/login')
 def login():
@@ -114,14 +129,24 @@ def register_user():
 
 @app.route('/nfts')
 def artwork():
-    return render_template("nfts.html")
+    if current_user.getUsername()!="":
+        return render_template("nfts.html", nft = nfts, logged_in=True)
+
+    return render_template("nfts.html", nft = nfts)
 
 @app.route('/nfts', methods=['GET', 'POST'])
 def choosen_nft():
     if request.method=='post':
-        return render_template('nftID.html') #treba ubaciti podatke na tu stranicu (slika, naziv, cena.....)
+        if current_user.getUsername()!="":
+            return render_template('nftID.html', logged_in=True) 
+        return render_template('nftID.html')
+
+@app.route('/account')
+def account():
+    return render_template('account.html', user = current_user, nft=nfts, logged_in=True)
 
 load_users(users)
+load_nfts(nfts)
 app.run()
 
 

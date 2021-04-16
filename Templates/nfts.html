@@ -5,24 +5,19 @@
     <body>
         {% include "nav.html" %}
         <section class="nfts">
-            {% block content %}
             
             <div>
                 <form action = "{{url_for("choosen_nft")}}" method="post">
                     <div class="grid">
 
-                        {% for i in range(30) %}
+                        {% for i in nft %}
                             {% include "grid-item.html" %}
                         {% endfor %}
 
                     </div>
                 </form>
-
-                <div class="shwmrbtn">
-                    <button>Load More</button>
-                </div>
             </div>
-            {% endblock %}
+
         </section>
 
         {% include "ftr.html" %}

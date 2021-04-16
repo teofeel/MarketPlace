@@ -31,14 +31,15 @@
     {% if logged_in %}
     <div class="userNav">
         <div class="navBtn">
-            <a href = "/account_settings">
+            <a href = "/account">
                 <div class="wrt">User</div>
             </a>
         </div>
         <div class="navBtn">
-            <a href = "/">
+            <a  href="{{url_for('logout')}}">
                 <div class="wrt">Logout</div>
             </a>
+
         </div>
     </div>
     {% endif %}

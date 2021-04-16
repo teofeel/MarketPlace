@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>MarkεtΠlacε</title>
+    </head>
+    <body>
+        {% include "nav.html" %}
+        
+        <div class = "account">
+            <div class="user">
+                <div class="username">
+                    <h2>{{user.getUsername()}}</h2>
+                </div>
+                <div class="funds">
+                    <h4>{{user.getFunds()}}</h4>
+                </div>
+            </div>
+            <div class="ownedNFT">
+                <h2>My NFTs</h2>
+                <div class="grid">
+                    <form action = "{{url_for("choosen_nft")}}" method="post">
+                        <div class="grid">
+    
+                            {% for i in nft %}
+                                {% if user.getUsername()==i.getOwner() %}
+                                    {% include "grid-item.html" %}
+                                {% endif %}
+                            {% endfor %}
+    
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        {% include "ftr.html" %}
+    </body>
+</html>

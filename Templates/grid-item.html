@@ -1,23 +1,23 @@
 <div class="grid-item">
     <a class="artwork-card" href="/Templates/nfts/nftID.html">
         <div class="cover">
-            <img src="">
+            <img src="{{url_for('static', filename=i.getCover())}}" height="100" width="100">
         </div>
 
         <div class="description">
             <div class="artwork-name">
-                <div class="artNm">{{ art_name }}</div>
+                <div class="artNm">{{ i.getName() }}</div>
             </div>
 
             <div class="creator">
-                <div class="crtNm">{{ creator }}</div>
+                <div class="crtNm">{{ i.getOwner() }}</div>
             </div>
         </div>
 
         <div class="price-outer">
             <div class="price">
                 <div class="prc">Price</div>
-                <div class="prc">{{ nft_price }}</div>
+                <div class="prc">{{ i.getPrice() }}</div>
             </div>
         </div>
     </a>
