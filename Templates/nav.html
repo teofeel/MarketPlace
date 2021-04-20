@@ -11,24 +11,22 @@
                 <div class="wrt">Home</div>
             </a>
         </div>
+    </div>
+
     {% if not logged_in %}
+    <div class="navbar2">
         <div class="navBtn">
             <a href = "/login">
                 <div class="wrt">Login</div>
             </a>
         </div>
-    </div>
-
-    <div class="navbar2">
         <div class="rgstrBtn">
             <a href = "/register">
                 <div class="wrt">Register</div>
             </a>
         </div>
     </div>
-    {% endif%}
-
-    {% if logged_in %}
+    {% else %}
     <div class="userNav">
         <div class="navBtn">
             <a href = "/account">
@@ -39,7 +37,6 @@
             <a  href="{{url_for('logout')}}">
                 <div class="wrt">Logout</div>
             </a>
-
         </div>
     </div>
     {% endif %}

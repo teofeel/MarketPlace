@@ -2,10 +2,10 @@
     "nft_id":{
         "id": 111,
         "type": "jpg/mp4/gif",
-        "cover": "slika.jpg",
+        "cover": "nfts/slika.jpg",
         "name": "nft",
         "description": "deskripcija",
         "price": 100,
-        "owner": "0x602D4963746D472C910d924e4101Bc1E9cc7e5f9"
+        "owner": "0x6e366c8363939F103A88879C066465843819F2A9"
     }
 }

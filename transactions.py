@@ -2,9 +2,9 @@ from web3 import Web3
 import json
 from datetime import datetime
 
-class Transaction(): #this works
+class Transaction(): 
     def __init__(self, buyer, seller, value):
-        ganache_url = "HTTP://127.0.0.1:7545" #ganache url, don't want to spend my money on gas fees
+        ganache_url = "HTTP://127.0.0.1:7545" 
 
         self.__web3 = Web3(Web3.HTTPProvider(ganache_url))
         self.__buyer = buyer
@@ -23,13 +23,6 @@ class Transaction(): #this works
     def send_transaction(self, private_key):
         signed_tx = self.__web3.eth.account.signTransaction(self.__tx, private_key)
         self.__web3.eth.sendRawTransaction(signed_tx.rawTransaction) 
-
-    '''def update_database(user):
-        with open('users.json') as json_file: 
-            data = json.load(json_file) 
-            temp = data['users'] 
-            temp.append(user)
-            write_json(data)'''
 
     def save_transaction(self): 
         def write_json(data, filename='transactions.json'):

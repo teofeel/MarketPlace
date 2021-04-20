@@ -2,18 +2,18 @@ from web3 import Web3
 import json
 
 class User():
-    def __init__(self, username, password, adress, nfts):
+    def __init__(self, username, password, address, nfts):
         ganache_url = "HTTP://127.0.0.1:7545"
 
         self.__web3 = Web3(Web3.HTTPProvider(ganache_url))
 
         self.__username = username
         self.__password = password
-        self.__adress = adress
-        if(adress == ""):
+        self.__address = address
+        if(address == ""):
             self.__funds = 0
         else:
-            self.__funds = self.__web3.fromWei(self.__web3.eth.getBalance(adress), 'ether')
+            self.__funds = self.__web3.fromWei(self.__web3.eth.getBalance(address), 'ether')
 
         self.__nfts = nfts
 
@@ -22,7 +22,7 @@ class User():
     def getPassword(self):
         return self.__password
     def getAdress(self):
-        return 
+        return self.__address
     def getFunds(self):
         return self.__funds
 
@@ -33,6 +33,8 @@ class User():
         self.__username = username
     def setPassword(self, password):
         self.__password = password
+    def setAddress(self, address):
+        self.__address = address
 
     def add_nft(self, nft):
         #nft.setAdress(user.adress)
@@ -43,30 +45,31 @@ class User():
             return True
         return False
 
-    '''def save_user(self): 
-        def write_json(data, filename='users.json'):
-            with open(filename,'w') as f: 
-                json.dump(data,f)
+
+    def update_username(self, username):
+        users_file=open("users.json")
+        users_data = json.load(users_file)
+        users_data[username] = users_data.pop(self.__username)
+        users_data[username]['username'] = username
         
-        user = {
-            "username": self.__username,
-            "password": self.__password,
-            "adress": self.__adress,
-            "funds": float(self.__funds),
-            "nfts": self.__nfts,
-            "cart": self.__cart
-        }
-        with open('users.json') as json_file: 
-            data = json.load(json_file) 
-            data[self.__username] = user
-            write_json(data)'''
-        
+
+    def update_password(self, password):
+        with open("users.json", 'r+') as users_file:
+            users_data = json.load(users_file)
+            users_data[self.__username]['password'] = password
+
+    def update_address(self, address):
+        with open("users.json", 'r+') as users_file:
+            users_data = json.load(users_file)
+            users_data[username]['address'] = address
+
+
     def save_user(self): 
         user = {
             self.__username:{
                 "username": self.__username,
                 "password": self.__password,
-                "adress": self.__adress,
+                "address": self.__address,
                 "funds": float(self.__funds),
                 "nfts": self.__nfts
             }

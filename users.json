@@ -1,8 +1,8 @@
 {
-    "naziv_usera": {
+    "username": {
         "username": "username", 
         "password": "password", 
-        "adress": "0x602D4963746D472C910d924e4101Bc1E9cc7e5f9", 
+        "address": "0x602D4963746D472C910d924e4101Bc1E9cc7e5f9", 
         "funds": 100, 
         "nfts": ["id1", "id2"]
     }

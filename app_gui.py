@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session, redirect, url_for
+from flask import Flask, request, render_template, session, redirect, url_for, Blueprint
 import json
 from web3 import Web3
 from transactions import Transaction
@@ -8,6 +8,7 @@ from nft import NFT
 #from brownie import nft
 
 app = Flask(__name__)
+
 
 infuria_url = "https://mainnet.infura.io/v3/639b3d222da343759f90819765eb6c55" #infura api to connect to eth blockchain network, if for real
 ganache_url = "HTTP://127.0.0.1:7545" #'local' eth network
@@ -28,7 +29,7 @@ def load_users(users):
         for acc in users_data[u]["nfts"]:
             nfts.append(acc)
 
-        users.append(User(users_data[u]["username"], users_data[u]["password"],users_data[u]["adress"], nfts)) 
+        users.append(User(users_data[u]["username"], users_data[u]["password"],users_data[u]["address"], nfts)) 
 
 def load_nfts(nfts):
     nfts_file = open("nfts.json")
@@ -52,7 +53,7 @@ def check_existing_username(username):
             return False
     return True
 
-def adress_valid(address):
+def address_valid(address):
     if web3.isAddress(address):
         return True
     return False
@@ -68,6 +69,28 @@ def register_func(username, password, conf_pass, address):
         u = User(username, password, address, [])
         u.save_user()
         return 4
+
+def username_valid(username):
+    users_file = open("users.json")
+    users_data = json.load(users_file)
+
+    try:
+        users_data[username]
+        return False
+    except:
+        return True
+
+def confirm_change_password(old_password, new_password, conf_password):
+    global current_user
+
+    if current_user.getPassword()==old_password:
+        if new_password == conf_password:
+            current_user.update_password(new_password)
+            current_user.setPassword(new_password)
+            return True
+        else:
+             return False
+    return False
 
 @app.route('/')
 def home():
@@ -145,9 +168,59 @@ def choosen_nft():
 def account():
     return render_template('account.html', user = current_user, nft=nfts, logged_in=True)
 
+@app.route('/settings')
+def settings():
+    return render_template('account-settings.html', logged_in=True)
+    
+
+@app.route('/changeUsername', methods=['GET', 'POST'])
+def changeUsername(): 
+    if request.method == 'GET':
+        return render_template('change-username.html', logged_in=True)
+    else:
+        global current_user
+        username = request.form.get("username")
+
+        if username_valid(username):
+            current_user.update_username(username) #nemenja u users.json
+            current_user.setUsername(username)
+            return settings()
+
+@app.route('/changePassword', methods=['GET', 'POST'])
+def changePassword(): 
+    if request.method == 'GET':
+        return render_template('change-password.html', logged_in=True)
+    else:
+        global current_user
+        old_password = request.form.get("old_password")
+        new_password = request.form.get("new_password")
+        conf_password = request.form.get("confirm_password")
+
+        if confirm_change_password(old_password, new_password, conf_password):
+            return settings()
+
+@app.route('/changeAddress', methods=['GET', 'POST'])
+def changeAddress(): 
+    if request.method == 'GET':
+        return render_template('change-address.html', logged_in=True)
+    else:
+        global current_user
+        address = request.form.get("address")
+        if adress_valid(address):
+            current_user.update_address(address)
+            current_user.setAddress(addres)
+            return settings()
+    
+'''buy nft -> <button value = {{nft.id()}} href = "buy-nft.html">Buy</button>
+@app.route('/buy-nft')
+def buy_nft():
+    return render_template('buy-nft.html')
+'''
+
 load_users(users)
 load_nfts(nfts)
 app.run()
+
 
 
 

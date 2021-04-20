@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>MarkεtΠlacε | Settings</title>
+    </head>
+    <body>
+        {% include "nav.html" %}
+        
+        <div class="hdr">
+            <div class="settings-option">
+                <div class="usrnmst">
+                    <a href="{{url_for('changeUsername')}}">Change Username</a>
+                </div>
+    
+                 <div class="pswst">
+                    <a href="{{url_for('changePassword')}}">Change Password</a>
+                </div>
+    
+                <div class="adrst">
+                    <a href="{{url_for('changeAddress')}}">Change Address</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="block">
+            {% block content %}{% endblock %}
+        </div>
+
+        {% include "ftr.html" %}
+    </body>
+</html>

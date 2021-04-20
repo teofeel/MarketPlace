@@ -1,0 +1,13 @@
+{% extends "account-settings.html" %}
+
+{% block content %}
+<div class="form">
+    <form class="forma" action = "/changeAdress" method="POST">
+        <h4>New Adress</h4>
+        <input type = "text" name="address"> 
+        <br>
+        <button type="submit">Change</button>
+        <p>{{content}}</p>
+    </form>
+</div>
+{% endblock %}
