@@ -47,21 +47,34 @@ class User():
 
 
     def update_username(self, username):
-        users_file=open("users.json")
-        users_data = json.load(users_file)
-        users_data[username] = users_data.pop(self.__username)
-        users_data[username]['username'] = username
+        with open("users.json", 'r+') as users_file:
+            users_data = json.load(users_file)
+            users_data[username] = users_data.pop(self.__username)
+
+            self.setUsername(username)
+            users_data[username]["username"] = self.__username
+
+        with open('users.json', 'w') as f:
+            json.dump(users_data, f, indent=2)
         
 
     def update_password(self, password):
         with open("users.json", 'r+') as users_file:
             users_data = json.load(users_file)
-            users_data[self.__username]['password'] = password
+            users_data[self.__username]["password"] = password
+            self.setPassword(password)
+
+        with open('users.json', 'w') as f:
+            json.dump(users_data, f, indent=2)
 
     def update_address(self, address):
         with open("users.json", 'r+') as users_file:
             users_data = json.load(users_file)
-            users_data[username]['address'] = address
+            users_data[self.__username]["address"] = address
+            self.setAddress(address)
+
+        with open('users.json', 'w') as f:
+            json.dump(users_data, f, indent=2)
 
 
     def save_user(self): 

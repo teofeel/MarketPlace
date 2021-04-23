@@ -9,7 +9,6 @@ from nft import NFT
 
 app = Flask(__name__)
 
-
 infuria_url = "https://mainnet.infura.io/v3/639b3d222da343759f90819765eb6c55" #infura api to connect to eth blockchain network, if for real
 ganache_url = "HTTP://127.0.0.1:7545" #'local' eth network
 web3 = Web3(Web3.HTTPProvider(ganache_url))
@@ -86,7 +85,6 @@ def confirm_change_password(old_password, new_password, conf_password):
     if current_user.getPassword()==old_password:
         if new_password == conf_password:
             current_user.update_password(new_password)
-            current_user.setPassword(new_password)
             return True
         else:
              return False
@@ -104,32 +102,29 @@ def logout():
     global current_user
     current_user = User("","","",[])  
       
-    return redirect(url_for('home'))
+    return home()
 
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
 
 @app.route('/login', methods=['GET', 'POST'])
-def login_user():
+def login():
+    if request.method == "GET":
+        return render_template('login.html')
+
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
 
         if login_func(username, password): 
             return home()
-        
-    return render_template("login.html", content = "Username or password not matching. Try again")
+        return render_template("login.html", content = "Username or password not matching. Try again")
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template("register.html")
-
-@app.route('/register', methods=['GET','POST'])
-def register_user():
-    global current_user
+    if request.method=="GET":
+        return render_template("register.html")
+    
     if request.method == "POST":
+        global current_user
         username = request.form.get("username")
         password = request.form.get("password")
         conf_pass = request.form.get("confirm_password")
@@ -147,8 +142,9 @@ def register_user():
 
         elif register_func(username, password, conf_pass, adress)==1:
             return render_template("register.html", content="Passwords don't match")
+        else:
+            return render_template("register.html", content="Uknown error")
 
-    return render_template("register.html", content="Uknown error")
 
 @app.route('/nfts')
 def artwork():
@@ -182,7 +178,7 @@ def changeUsername():
         username = request.form.get("username")
 
         if username_valid(username):
-            current_user.update_username(username) #nemenja u users.json
+            current_user.update_username(username) 
             current_user.setUsername(username)
             return settings()
 
@@ -206,9 +202,9 @@ def changeAddress():
     else:
         global current_user
         address = request.form.get("address")
-        if adress_valid(address):
+        if address_valid(address):
             current_user.update_address(address)
-            current_user.setAddress(addres)
+            current_user.setAddress(address)
             return settings()
     
 '''buy nft -> <button value = {{nft.id()}} href = "buy-nft.html">Buy</button>

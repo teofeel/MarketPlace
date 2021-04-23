@@ -1,9 +1,12 @@
 {
-    "username": {
-        "username": "username", 
-        "password": "password", 
-        "address": "0x602D4963746D472C910d924e4101Bc1E9cc7e5f9", 
-        "funds": 100, 
-        "nfts": ["id1", "id2"]
-    }
+  "user": {
+    "username": "user",
+    "password": "password",
+    "address": "0x6e366c8363939F103A88879C066465843819F2A9",
+    "funds": 100,
+    "nfts": [
+      "id1",
+      "id2"
+    ]
+  }
 }

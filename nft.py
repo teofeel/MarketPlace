@@ -37,7 +37,7 @@ class NFT:
         bytecode = compiled_sol['contracts']['NFT.sol']['NFT']['evm']['bytecode']['object']
         abi = json.loads(compiled_sol['contracts']['NFT.sol']['NFT']['metadata'])['output']['abi']
 
-        nft = web3.eth.contract(abi=abi,bytecode=bytecode)
+        nft = self.__web3.eth.contract(abi=abi,bytecode=bytecode)
         tx_hash = nft.constructor(self.__name, self.__id).transact()
         tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
