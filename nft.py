@@ -57,6 +57,8 @@ class NFT:
 
     def getCover(self):
         return self.__cover
+    def getID(self):
+        return self.__id
 
 
     

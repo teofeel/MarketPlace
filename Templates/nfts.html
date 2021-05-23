@@ -7,15 +7,14 @@
         <section class="nfts">
             
             <div>
-                <form action = "{{url_for("choosen_nft")}}" method="post">
-                    <div class="grid">
+                <div class="grid">
 
-                        {% for i in nft %}
-                            {% include "grid-item.html" %}
-                        {% endfor %}
+                    {% for i in nft %}
+                        {% include "grid-item.html" %}
+                    {% endfor %}
 
-                    </div>
-                </form>
+                </div>
+                
             </div>
 
         </section>

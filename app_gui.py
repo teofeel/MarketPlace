@@ -153,12 +153,12 @@ def artwork():
 
     return render_template("nfts.html", nft = nfts)
 
-@app.route('/nfts', methods=['GET', 'POST'])
+'''@app.route('/nfts', methods=['GET', 'POST'])
 def choosen_nft():
     if request.method=='post':
         if current_user.getUsername()!="":
             return render_template('nftID.html', logged_in=True) 
-        return render_template('nftID.html')
+        return render_template('nftID.html')'''
 
 @app.route('/account')
 def account():
@@ -207,15 +207,22 @@ def changeAddress():
             current_user.setAddress(address)
             return settings()
     
-'''buy nft -> <button value = {{nft.id()}} href = "buy-nft.html">Buy</button>
-@app.route('/buy-nft')
-def buy_nft():
+@app.route('/nftID/<ID>')
+def nft(ID):
+    for i in nfts:
+        if int(ID) == i.getID():
+            if current_user.getUsername() != "":
+                return render_template("nftID.html", NFT=i, logged_in=True)
+            return render_template('nftID.html', NFT=i)
+                
+@app.route('/buy-nft/<ID>')
+def buy_nft(ID):
     return render_template('buy-nft.html')
-'''
 
 load_users(users)
 load_nfts(nfts)
-app.run()
+
+app.run(debug=True)
 
 
 

@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>MarkεtΠlacε | NFT.getName()</title>
+    </head>
+    <body>
+        {% include "nav.html" %}
+        <div class="nft">
+            <img src="{{url_for('static', filename=NFT.getCover())}}">
+
+            <h1>{{NFT.getName()}}</h1>
+
+        </div>
+        <br>
+        <div class="buy">
+            <a href="buy-nft/{{NFT.getID()}}">Buy</a>
+        </div>
+
+        {% include "ftr.html" %}
+    </body>
+</html>

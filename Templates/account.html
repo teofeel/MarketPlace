@@ -21,17 +21,15 @@
             <div class="ownedNFT">
                 <h2>My NFTs</h2>
                 <div class="grid">
-                    <form action = "{{url_for("choosen_nft")}}" method="post">
-                        <div class="grid">
+                    <div class="grid">
     
-                            {% for i in nft %}
-                                {% if user.getUsername()==i.getOwner() %}
-                                    {% include "grid-item.html" %}
-                                {% endif %}
-                            {% endfor %}
+                        {% for i in nft %}
+                            {% if user.getUsername()==i.getOwner() %}
+                                {% include "grid-item.html" %}
+                            {% endif %}
+                        {% endfor %}
     
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
 
