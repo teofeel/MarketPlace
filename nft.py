@@ -57,8 +57,15 @@ class NFT:
 
     def getCover(self):
         return self.__cover
+
     def getID(self):
         return self.__id
+
+    def getAdress(self):
+        return self.__owner
+    
+    def changeOwner(self, newAdress):
+        self.__owner = newAdress
 
 
     

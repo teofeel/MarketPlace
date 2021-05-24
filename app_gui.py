@@ -94,7 +94,7 @@ def confirm_change_password(old_password, new_password, conf_password):
 def home():
     if current_user.getUsername()!="":
         return render_template('home.html', logged_in=True)
-        
+
     return render_template('home.html')
 
 @app.route('/logout')
@@ -214,10 +214,33 @@ def nft(ID):
             if current_user.getUsername() != "":
                 return render_template("nftID.html", NFT=i, logged_in=True)
             return render_template('nftID.html', NFT=i)
-                
+
 @app.route('/buy-nft/<ID>')
 def buy_nft(ID):
-    return render_template('buy-nft.html')
+    for i in nfts:
+        if int(ID) == i.getID():
+            if current_user.getUsername()!="":
+                return render_template('buy-nft.html', nft=i,logged_in=True)
+            return login()
+
+@app.route('/buy', methods=['POST'])
+def buy():
+    ID = request.form.get("id")
+    print(ID)
+    if current_user.getUsername()=="":
+        return login()
+    for i in nfts:
+        print(ID)
+        if ID == i.getID():
+            print('ovde si')
+            transaction = Transaction(current_user.getAdress(), i.getAdress(), i.getPrice())
+            transaction.send_transaction(request.form.get("private_key"))
+            transaction.save_transaction()
+            return account()
+    return home()
+
+    
+
 
 load_users(users)
 load_nfts(nfts)

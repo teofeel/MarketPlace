@@ -1,6 +1,7 @@
 from web3 import Web3
 import json
 from datetime import datetime
+from nft import NFT
 
 class Transaction(): 
     def __init__(self, buyer, seller, value):
@@ -20,9 +21,10 @@ class Transaction():
             'gasPrice': self.__web3.toWei('50', 'gwei')
         }
 
-    def send_transaction(self, private_key):
+    def send_transaction(self, private_key, nft):
         signed_tx = self.__web3.eth.account.signTransaction(self.__tx, private_key)
         self.__web3.eth.sendRawTransaction(signed_tx.rawTransaction) 
+        nft.changeOwner(self.__buyer)
 
     def save_transaction(self): 
         def write_json(data, filename='transactions.json'):

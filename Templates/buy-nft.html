@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>MarkεtΠlacε | Buy</title>
+    </head>
+    <body>
+        {% include "nav.html" %}
+
+        <div>
+            <input name="id" value="{{nft.getID()}}">
+            <form action="{{url_for("buy")}}" method="post">
+                <p>Private key:</p>
+                <input type="text" name="private_key">
+                <p>Check to confirm</p>
+                <input type="checkbox" required>
+
+                <input type="submit" value="Buy"> 
+            </form>
+        </div>
+
+        {% include "ftr.html" %}
+    </body>
+</html>
